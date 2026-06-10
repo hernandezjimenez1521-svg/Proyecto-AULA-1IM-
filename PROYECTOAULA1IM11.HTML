@@ -1,0 +1,1151 @@
+
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MenteSana - Portal Integral de Salud Mental</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mental: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                            950: '#042f2e',
+                        },
+                        calm: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Animaciones para el respirador y efectos premium */
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); background-color: rgba(20, 184, 166, 0.2); }
+            45% { transform: scale(1.6); background-color: rgba(139, 92, 246, 0.4); }
+            55% { transform: scale(1.6); background-color: rgba(139, 92, 246, 0.4); }
+        }
+        .breathe-circle {
+            animation: breathe 16s infinite ease-in-out;
+            animation-play-state: paused;
+        }
+        .breathe-active .breathe-circle {
+            animation-play-state: running;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-mental-200">
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('inicio')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-mental-500 to-calm-500 flex items-center justify-center text-white shadow-lg shadow-mental-500/20">
+                        <i class="fa-solid fa-brain text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-mental-600 to-calm-600 bg-clip-text text-transparent">MenteSana</span>
+                </div>
+
+                <!-- Menú Desktop -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <button onclick="navigateTo('inicio')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-mental-600 bg-mental-50" data-target="inicio">Inicio</button>
+                    <button onclick="navigateTo('ansiedad')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-mental-600 hover:bg-slate-50 transition-all" data-target="ansiedad">Ansiedad</button>
+                    <button onclick="navigateTo('gestion')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-mental-600 hover:bg-slate-50 transition-all" data-target="gestion">Gestión Emocional</button>
+                    <button onclick="navigateTo('depresion')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-mental-600 hover:bg-slate-50 transition-all" data-target="depresion">Depresión</button>
+                    <button onclick="navigateTo('redes')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-mental-600 hover:bg-slate-50 transition-all" data-target="redes">Redes Sociales</button>
+                    <button onclick="navigateTo('salud-emocional')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-mental-600 hover:bg-slate-50 transition-all" data-target="salud-emocional">Salud Emocional</button>
+                    <button onclick="navigateTo('estres')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-mental-600 hover:bg-slate-50 transition-all" data-target="estres">Estrés</button>
+                    <button onclick="navigateTo('herramientas')" class="ml-4 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-mental-500 to-calm-500 hover:shadow-lg hover:shadow-mental-500/20 transition-all flex items-center space-x-2" data-target="herramientas">
+                        <i class="fa-solid fa-heartpulse"></i>
+                        <span>Herramientas</span>
+                    </button>
+                </nav>
+
+                <!-- Botón Menú Móvil -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-600 hover:text-slate-900 focus:outline-none p-2 rounded-lg hover:bg-slate-100">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div class="lg:hidden hidden bg-white border-b border-slate-100" id="mobile-menu">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <button onclick="navigateTo('inicio')" class="mobile-nav-btn w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-mental-600 bg-mental-50" data-target="inicio">Inicio</button>
+                <button onclick="navigateTo('ansiedad')" class="mobile-nav-btn w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50" data-target="ansiedad">Trastorno de Ansiedad</button>
+                <button onclick="navigateTo('gestion')" class="mobile-nav-btn w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50" data-target="gestion">Gestión Emocional</button>
+                <button onclick="navigateTo('depresion')" class="mobile-nav-btn w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50" data-target="depresion">Depresión y Alertas</button>
+                <button onclick="navigateTo('redes')" class="mobile-nav-btn w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50" data-target="redes">Redes Sociales</button>
+                <button onclick="navigateTo('salud-emocional')" class="mobile-nav-btn w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50" data-target="salud-emocional">Salud Emocional</button>
+                <button onclick="navigateTo('estres')" class="mobile-nav-btn w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50" data-target="estres">Estrés</button>
+                <button onclick="navigateTo('herramientas')" class="mobile-nav-btn w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-white bg-gradient-to-r from-mental-500 to-calm-500 flex items-center justify-between" data-target="herramientas">
+                    <span>Herramientas Interactivas</span>
+                    <i class="fa-solid fa-heartpulse"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- NOTIFICACIÓN DE NOTAS / ACCIONES (TOAST) -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-mental-400 text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">Acción completada.</span>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow">
+
+        <!-- ================= PÁGINA 1: INICIO (GENERAL) ================= -->
+        <div id="inicio" class="tab-content active animate-fade-in">
+            <!-- Hero Section -->
+            <section class="relative bg-gradient-to-b from-mental-50 via-white to-slate-50 pt-16 pb-20 overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-mental-100 text-mental-800 mb-6">
+                            <i class="fa-solid fa-shield-halved mr-1.5 animate-pulse"></i> Tu Espacio Seguro de Autocuidado
+                        </span>
+                        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-8 leading-tight">
+                            Cuida tu mente, <br class="hidden sm:inline">
+                            <span class="bg-gradient-to-r from-mental-600 to-calm-600 bg-clip-text text-transparent">transforma tu vida</span>
+                        </h1>
+                        <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+                            La salud mental es un pilar fundamental para el bienestar humano. Explora guías profesionales científicamente validadas, comprende tus emociones y utiliza nuestras herramientas interactivas diseñadas para brindarte paz en tu día a día.
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#temas-grid" class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white font-semibold rounded-2xl hover:bg-slate-800 shadow-lg shadow-slate-900/10 transition-all text-center">
+                                Explorar Temarios
+                            </a>
+                            <button onclick="navigateTo('herramientas')" class="w-full sm:w-auto px-8 py-4 bg-white text-mental-700 border border-mental-200 font-semibold rounded-2xl hover:bg-mental-50 shadow-md shadow-mental-500/5 transition-all flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>Ejercicios Prácticos</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Grid de Temas (Navegación Directa) -->
+            <section id="temas-grid" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900">Especialidades e Información Clave</h2>
+                    <p class="text-slate-600 mt-2">Accede directamente a los subtemas para obtener información detallada</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tarjeta Ansiedad -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-500 mb-6">
+                                <i class="fa-solid fa-wind text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">2. Trastorno de Ansiedad</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">Comprende la diferencia entre la ansiedad común y los trastornos clínicos. Descubre sus síntomas físicos, tipos comunes y pautas terapéuticas de afrontamiento.</p>
+                        </div>
+                        <button onclick="navigateTo('ansiedad')" class="w-full py-3 bg-slate-50 hover:bg-amber-50 text-slate-700 hover:text-amber-700 font-semibold rounded-xl text-sm transition-all flex items-center justify-center space-x-2">
+                            <span>Ver subtema</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tarjeta Gestión Emocional -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-500 mb-6">
+                                <i class="fa-solid fa-gears text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">3. Gestión Emocional</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">La inteligencia emocional es una habilidad que se entrena. Aprende sobre el reconocimiento de emociones y métodos efectivos de regulación de impulsos.</p>
+                        </div>
+                        <button onclick="navigateTo('gestion')" class="w-full py-3 bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold rounded-xl text-sm transition-all flex items-center justify-center space-x-2">
+                            <span>Ver subtema</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tarjeta Depresión -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-500 mb-6">
+                                <i class="fa-solid fa-cloud-showers-heavy text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">4. Depresión y Señales de Alerta</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">Un análisis profundo de la depresión. Identifica los signos silenciosos de alerta en ti mismo o en tus seres queridos para intervenir de forma oportuna.</p>
+                        </div>
+                        <button onclick="navigateTo('depresion')" class="w-full py-3 bg-slate-50 hover:bg-rose-50 text-slate-700 hover:text-rose-700 font-semibold rounded-xl text-sm transition-all flex items-center justify-center space-x-2">
+                            <span>Ver subtema</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tarjeta Redes Sociales -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-500 mb-6">
+                                <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">5. Redes Sociales e Impacto</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">¿Cómo afecta la hiperconectividad a nuestro cerebro? Analizamos la trampa de la comparación, el FOMO y pautas eficaces para un detox digital saludable.</p>
+                        </div>
+                        <button onclick="navigateTo('redes')" class="w-full py-3 bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold rounded-xl text-sm transition-all flex items-center justify-center space-x-2">
+                            <span>Ver subtema</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tarjeta Salud Emocional -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center text-teal-500 mb-6">
+                                <i class="fa-solid fa-hand-holding-heart text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">6. Salud Emocional</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">Aprende qué caracteriza a un individuo emocionalmente sano. Conoce la resiliencia mental y estrategias para nutrir tus relaciones interpersonales.</p>
+                        </div>
+                        <button onclick="navigateTo('salud-emocional')" class="w-full py-3 bg-slate-50 hover:bg-teal-50 text-slate-700 hover:text-teal-700 font-semibold rounded-xl text-sm transition-all flex items-center justify-center space-x-2">
+                            <span>Ver subtema</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tarjeta Estrés -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center text-red-500 mb-6">
+                                <i class="fa-solid fa-bolt text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">7. El Estrés y su Control</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">Descubre la biología del estrés (eustrés vs. distrés). Identifica los detonantes de la vida moderna y técnicas para regular tu sistema nervioso.</p>
+                        </div>
+                        <button onclick="navigateTo('estres')" class="w-full py-3 bg-slate-50 hover:bg-red-50 text-slate-700 hover:text-red-700 font-semibold rounded-xl text-sm transition-all flex items-center justify-center space-x-2">
+                            <span>Ver subtema</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ¿Qué es la Salud Mental y pilares? (Información Base Solicitada) -->
+            <section class="py-16 bg-white border-t border-slate-100">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <span class="text-sm font-bold text-mental-600 uppercase tracking-wider">Concepto Base</span>
+                            <h2 class="text-3xl font-extrabold text-slate-900 mt-2 mb-6">¿Qué es realmente la Salud Mental?</h2>
+                            <p class="text-slate-600 leading-relaxed mb-4">
+                                Según la Organización Mundial de la Salud (OMS), la salud mental es un estado de bienestar mental que permite a las personas hacer frente a los momentos de estrés de la vida, desarrollar todas sus habilidades, poder aprender y trabajar adecuadamente y contribuir a la mejora de su comunidad.
+                            </p>
+                            <p class="text-slate-600 leading-relaxed">
+                                No es simplemente la ausencia de trastornos mentales. Es un espectro complejo y dinámico que influye en cómo pensamos, sentimos, actuamos, tomamos decisiones y nos relacionamos con los demás a lo largo de todas las etapas de la vida.
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 space-y-6">
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">Dimensiones Esenciales</h3>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 rounded-full bg-mental-100 flex items-center justify-center text-mental-700 shrink-0 mt-1">
+                                    <i class="fa-solid fa-brain text-xs"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-base">Bienestar Psicológico</h4>
+                                    <p class="text-slate-500 text-sm">Autoconcepto positivo, propósito de vida y resiliencia emocional ante las dificultades.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 rounded-full bg-calm-100 flex items-center justify-center text-calm-700 shrink-0 mt-1">
+                                    <i class="fa-solid fa-users text-xs"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-base">Bienestar Social</h4>
+                                    <p class="text-slate-500 text-sm">Capacidad de conectar con otros y sostener redes de apoyo recíprocas e inclusivas.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0 mt-1">
+                                    <i class="fa-solid fa-heart text-xs"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-base">Bienestar Biológico</h4>
+                                    <p class="text-slate-500 text-sm">Funcionamiento óptimo de los sistemas neurotransmisores, sueño reparador y balance hormonal.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ¿Cómo se logra, qué afecta, para qué sirve? -->
+            <section class="py-16 bg-slate-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Columna 1 -->
+                        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-mental-50 text-mental-600 flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-puzzle-piece text-lg"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">¿Para qué sirve?</h3>
+                            <ul class="space-y-3 text-slate-600 text-sm">
+                                <li class="flex items-start"><i class="fa-solid fa-check text-mental-500 mr-2 mt-1"></i> Manejar adecuadamente el estrés cotidiano de forma adaptativa.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-mental-500 mr-2 mt-1"></i> Mantener relaciones interpersonales sanas y constructivas.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-mental-500 mr-2 mt-1"></i> Trabajar y estudiar de manera productiva explotando el potencial propio.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-mental-500 mr-2 mt-1"></i> Tomar decisiones racionales y reflexivas en situaciones críticas.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Columna 2 -->
+                        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">¿Qué la afecta?</h3>
+                            <ul class="space-y-3 text-slate-600 text-sm">
+                                <li class="flex items-start"><i class="fa-solid fa-circle-exclamation text-rose-500 mr-2 mt-1"></i> <strong>Factores biológicos:</strong> Genética y desbalances de la química cerebral.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-circle-exclamation text-rose-500 mr-2 mt-1"></i> <strong>Experiencias de vida:</strong> Traumas, abuso infantil o entornos disfuncionales.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-circle-exclamation text-rose-500 mr-2 mt-1"></i> <strong>Estilos de vida:</strong> Privación del sueño prolongada, sedentarismo y mala dieta.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-circle-exclamation text-rose-500 mr-2 mt-1"></i> <strong>Entorno socioeconómico:</strong> Pobreza extrema, desigualdad laboral y aislamiento.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Columna 3 -->
+                        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-spa text-lg"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">¿Cómo se logra?</h3>
+                            <ul class="space-y-3 text-slate-600 text-sm">
+                                <li class="flex items-start"><i class="fa-solid fa-star text-emerald-500 mr-2 mt-1"></i> <strong>Autocuidado:</strong> Priorizar el descanso (7-8 horas) y realizar actividad física diaria.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-star text-emerald-500 mr-2 mt-1"></i> <strong>Conexión social:</strong> Nutrir lazos afectivos de valor con familiares y amigos.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-star text-emerald-500 mr-2 mt-1"></i> <strong>Límites saludables:</strong> Decir "no" para proteger tu energía mental y tiempo.</li>
+                                <li class="flex items-start"><i class="fa-solid fa-star text-emerald-500 mr-2 mt-1"></i> <strong>Ayuda profesional:</strong> Acudir a psicoterapia sin estigmas para guías clínicas personalizadas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= PÁGINA 2: TRASTORNO DE ANSIEDAD ================= -->
+        <div id="ansiedad" class="tab-content animate-fade-in py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Volver al Inicio -->
+                <button onclick="navigateTo('inicio')" class="text-sm font-semibold text-mental-600 hover:text-mental-800 flex items-center space-x-1.5 mb-6">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al menú principal</span>
+                </button>
+
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">2. El Trastorno de Ansiedad</h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    A diferencia de la ansiedad cotidiana (una reacción normal de alerta ante el peligro), un <strong>trastorno de ansiedad</strong> se caracteriza por una preocupación excesiva, persistente y desproporcionada que interfiere gravemente con las actividades diarias.
+                </p>
+
+                <!-- Síntomas Físicos vs Cognitivos -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-amber-50/50 border border-amber-100 rounded-3xl p-6">
+                        <h3 class="text-lg font-bold text-amber-900 mb-4 flex items-center space-x-2">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                            <span>Manifestaciones Físicas</span>
+                        </h3>
+                        <ul class="space-y-2 text-amber-950 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-chevron-right text-xs mt-1.5 mr-2"></i> Palpitaciones, taquicardia o dolor en el pecho.</li>
+                            <li class="flex items-start"><i class="fa-solid fa-chevron-right text-xs mt-1.5 mr-2"></i> Dificultad para respirar o sensación de asfixia (hiperventilación).</li>
+                            <li class="flex items-start"><i class="fa-solid fa-chevron-right text-xs mt-1.5 mr-2"></i> Tensión muscular persistente y temblores involuntarios.</li>
+                            <li class="flex items-start"><i class="fa-solid fa-chevron-right text-xs mt-1.5 mr-2"></i> Sudoración excesiva, mareos o problemas digestivos.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-100/80 border border-slate-200 rounded-3xl p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                            <i class="fa-solid fa-brain"></i>
+                            <span>Manifestaciones Mentales</span>
+                        </h3>
+                        <ul class="space-y-2 text-slate-700 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-chevron-right text-xs mt-1.5 mr-2"></i> Pensamiento catastrófico (creer que pasará lo peor).</li>
+                            <li class="flex items-start"><i class="fa-solid fa-chevron-right text-xs mt-1.5 mr-2"></i> Sensación de pérdida de control o miedo a volverse loco/morir.</li>
+                            <li class="flex items-start"><i class="fa-solid fa-chevron-right text-xs mt-1.5 mr-2"></i> Estado de hipervigilancia constante ante posibles amenazas.</li>
+                            <li class="flex items-start"><i class="fa-solid fa-chevron-right text-xs mt-1.5 mr-2"></i> Dificultad para concentrarse o mente "en blanco".</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tipos de Trastornos de Ansiedad -->
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Tipos Comunes de Trastornos de Ansiedad</h2>
+                <div class="space-y-4 mb-10">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-lg">Trastorno de Ansiedad Generalizada (TAG)</h3>
+                        <p class="text-slate-600 text-sm mt-2">Preocupación persistente e irreal sobre múltiples aspectos del día a día (salud, dinero, familia, trabajo) durante al menos 6 meses, sin un desencadenante inmediato evidente.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-lg">Trastorno de Pánico</h3>
+                        <p class="text-slate-600 text-sm mt-2">Aparición súbita y recurrente de ataques de pánico (crisis intensas de miedo extremo con síntomas corporales abrumadores), seguidos por un miedo persistente a sufrir nuevos ataques.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-lg">Fobia Social (Ansiedad Social)</h3>
+                        <p class="text-slate-600 text-sm mt-2">Miedo intenso o ansiedad ante situaciones en las que la persona puede ser evaluada de forma negativa por los demás, lo que conduce a la evitación extrema de interacciones cotidianas.</p>
+                    </div>
+                </div>
+
+                <!-- Herramientas de Afrontamiento -->
+                <div class="bg-mental-950 text-white rounded-3xl p-8 mb-6">
+                    <h3 class="text-xl font-bold text-white mb-4">¿Cómo podemos abordarlo clínicamente?</h3>
+                    <p class="text-mental-200 text-sm mb-6">La psicoterapia, en especial la <strong>Terapia Cognitivo-Conductual (TCC)</strong>, ha demostrado ser el tratamiento de primera línea con mayor efectividad a largo plazo. Ayuda al paciente a reestructurar pensamientos irracionales y a realizar una exposición gradual controlada a los estímulos que le causan pánico o evitación.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button onclick="navigateTo('herramientas')" class="px-5 py-3 bg-white text-mental-950 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-wind text-mental-600"></i>
+                            <span>Ir al Ejercicio de Respiración Guiada</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PÁGINA 3: GESTIÓN EMOCIONAL ================= -->
+        <div id="gestion" class="tab-content animate-fade-in py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="navigateTo('inicio')" class="text-sm font-semibold text-mental-600 hover:text-mental-800 flex items-center space-x-1.5 mb-6">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al menú principal</span>
+                </button>
+
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">3. Gestión Emocional</h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    La gestión emocional no implica reprimir o ignorar lo que sentimos. Al contrario, consiste en la capacidad de <strong>reconocer, comprender, procesar y regular</strong> las respuestas de nuestro sistema emocional para que jueguen a nuestro favor en vez de dominarnos.
+                </p>
+
+                <!-- El Ciclo de la Gestión Emocional -->
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">El Proceso de Gestión de 4 Pasos</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 text-center">
+                        <span class="inline-flex w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 items-center justify-center font-bold text-sm mb-4">1</span>
+                        <h4 class="font-bold text-slate-900 text-sm mb-2">Validar</h4>
+                        <p class="text-slate-500 text-xs">Identificar qué emoción sientes sin juzgarla como "buena" o "mala".</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 text-center">
+                        <span class="inline-flex w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 items-center justify-center font-bold text-sm mb-4">2</span>
+                        <h4 class="font-bold text-slate-900 text-sm mb-2">Comprender</h4>
+                        <p class="text-slate-500 text-xs">Indagar el origen de la emoción. ¿Qué necesidad no cubierta la disparó?</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 text-center">
+                        <span class="inline-flex w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 items-center justify-center font-bold text-sm mb-4">3</span>
+                        <h4 class="font-bold text-slate-900 text-sm mb-2">Expresar</h4>
+                        <p class="text-slate-500 text-xs">Dar salida saludable a la emoción (escribir, hablar, hacer deporte).</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 text-center">
+                        <span class="inline-flex w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 items-center justify-center font-bold text-sm mb-4">4</span>
+                        <h4 class="font-bold text-slate-900 text-sm mb-2">Regular</h4>
+                        <p class="text-slate-500 text-xs">Utilizar herramientas cognitivas o fisiológicas para modular la intensidad.</p>
+                    </div>
+                </div>
+
+                <!-- Técnicas de Gestión Emocional Eficientes -->
+                <div class="space-y-6 mb-10">
+                    <h3 class="text-2xl font-bold text-slate-900">Estrategias Clínicas para tu Rutina</h3>
+                    
+                    <div class="flex items-start space-x-4 bg-white p-6 rounded-2xl border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0 mt-1">
+                            <i class="fa-solid fa-pencil"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Escritura Terapéutica (Journaling)</h4>
+                            <p class="text-slate-600 text-sm">Escribir de manera fluida y sin filtros lo que experimentas reduce drásticamente la actividad en la amígdala cerebral y ayuda a estructurar tus sentimientos lógicamente.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 bg-white p-6 rounded-2xl border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0 mt-1">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">La Regla de los 90 Segundos</h4>
+                            <p class="text-slate-600 text-sm">La reacción bioquímica inicial de una emoción dura solo 90 segundos en el torrente sanguíneo. Todo lo que dure más de eso es alimentado por tus propios pensamientos rumiativos.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 bg-white p-6 rounded-2xl border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0 mt-1">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Reestructuración Cognitiva</h4>
+                            <p class="text-slate-600 text-sm">Consiste en debatir de forma consciente las distorsiones de la mente. Pregúntate: "¿Es este pensamiento un hecho irrefutable o solo una interpretación pesimista?"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diario de Gratitud Acceso Rápido -->
+                <div class="bg-indigo-900 text-white p-8 rounded-3xl">
+                    <h4 class="text-xl font-bold mb-2">Entrena tu Enfoque Cognitivo</h4>
+                    <p class="text-indigo-200 text-sm mb-6">Un gran paso de la gestión emocional consiste en desviar activamente la atención hacia las cosas por las que estamos agradecidos. Nuestro Diario de Gratitud digital te ayudará a consolidar este hábito.</p>
+                    <button onclick="navigateTo('herramientas')" class="px-5 py-3 bg-white text-indigo-950 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-all">
+                        Ir al Diario de Gratitud
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PÁGINA 4: DEPRESIÓN Y SEÑALES DE ALERTA ================= -->
+        <div id="depresion" class="tab-content animate-fade-in py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="navigateTo('inicio')" class="text-sm font-semibold text-mental-600 hover:text-mental-800 flex items-center space-x-1.5 mb-6">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al menú principal</span>
+                </button>
+
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">4. Depresión y Señales de Alerta</h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    La depresión no es simplemente estar triste o tener un mal día. Es un trastorno del estado de ánimo clínico y persistente que genera una tristeza profunda de semanas de duración, apatía generalizada, y fatiga debilitante que impide realizar cualquier labor diaria.
+                </p>
+
+                <!-- Señales de Alerta Claras -->
+                <div class="bg-rose-50 border border-rose-100 rounded-3xl p-8 mb-10">
+                    <h3 class="text-2xl font-bold text-rose-950 mb-6 flex items-center space-x-2">
+                        <i class="fa-solid fa-triangle-exclamation text-rose-600"></i>
+                        <span>Señales de Alerta Críticas (Red Flags)</span>
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-800 text-xs font-bold flex items-center justify-center shrink-0 mr-3 mt-1">!</span>
+                                <p class="text-sm text-rose-900 leading-relaxed"><strong>Anhedonia:</strong> Pérdida total de interés o placer por actividades que antes resultaban estimulantes o placenteras.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-800 text-xs font-bold flex items-center justify-center shrink-0 mr-3 mt-1">!</span>
+                                <p class="text-sm text-rose-900 leading-relaxed"><strong>Fatiga persistente:</strong> Sensación de agotamiento severo incluso sin haber realizado esfuerzo físico considerable.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-800 text-xs font-bold flex items-center justify-center shrink-0 mr-3 mt-1">!</span>
+                                <p class="text-sm text-rose-900 leading-relaxed"><strong>Alteraciones severas del sueño:</strong> Insomnio persistente a altas horas o, por el contrario, somnolencia extrema y excesiva.</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-800 text-xs font-bold flex items-center justify-center shrink-0 mr-3 mt-1">!</span>
+                                <p class="text-sm text-rose-900 leading-relaxed"><strong>Sentimientos de inutilidad:</strong> Autoculpa excesiva e irracional y una visión profundamente desesperanzada del porvenir.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-800 text-xs font-bold flex items-center justify-center shrink-0 mr-3 mt-1">!</span>
+                                <p class="text-sm text-rose-900 leading-relaxed"><strong>Aislamiento social:</strong> Distanciamiento intencionado de amigos, familia y abandono de la higiene personal básica.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-800 text-xs font-bold flex items-center justify-center shrink-0 mr-3 mt-1">!</span>
+                                <p class="text-sm text-rose-900 leading-relaxed"><strong>Cambios drásticos de peso:</strong> Pérdida o aumento desmesurado del apetito que repercute en la salud metabólica global.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Qué hacer / Cómo ayudar -->
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">¿Cómo actuar si tú o alguien cercano muestra señales?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6">
+                        <h4 class="font-bold text-slate-900 mb-3 flex items-center space-x-2">
+                            <i class="fa-solid fa-handshake-angle text-mental-500"></i>
+                            <span>Si es un ser querido</span>
+                        </h4>
+                        <ul class="space-y-2 text-slate-600 text-sm">
+                            <li><i class="fa-solid fa-circle-check text-mental-500 mr-2"></i> <strong>Escucha activa:</strong> No minimices su sentir con frases como "pon de tu parte".</li>
+                            <li><i class="fa-solid fa-circle-check text-mental-500 mr-2"></i> <strong>Acompaña:</strong> Ofrécele apoyo en gestiones diarias sencillas como agendar una cita médica.</li>
+                            <li><i class="fa-solid fa-circle-check text-mental-500 mr-2"></i> <strong>Informa:</strong> Recuérdale que la depresión es tratable químicamente y con terapia.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6">
+                        <h4 class="font-bold text-slate-900 mb-3 flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-user text-mental-500"></i>
+                            <span>Si lo experimentas tú</span>
+                        </h4>
+                        <ul class="space-y-2 text-slate-600 text-sm">
+                            <li><i class="fa-solid fa-circle-check text-mental-500 mr-2"></i> <strong>No te aísles:</strong> Comparte lo que sientes con una persona de confianza.</li>
+                            <li><i class="fa-solid fa-circle-check text-mental-500 mr-2"></i> <strong>Divide metas:</strong> Ejecuta tareas divididas en pasos extremadamente pequeños.</li>
+                            <li><i class="fa-solid fa-circle-check text-mental-500 mr-2"></i> <strong>Busca terapeuta:</strong> Recuerda que acudir a psiquiatría o psicología no te hace débil.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Línea de Ayuda Directa -->
+                <div class="bg-gradient-to-tr from-rose-600 to-amber-600 text-white rounded-3xl p-8 text-center">
+                    <h3 class="text-2xl font-extrabold mb-2">Tu vida tiene un inmenso valor</h3>
+                    <p class="text-rose-100 text-sm max-w-xl mx-auto mb-6">Si estás experimentando pensamientos de desesperanza extrema o ideación autolítica, por favor contacta de forma inmediata a los números de emergencia gratuitos de tu país de residencia.</p>
+                    <div class="inline-block px-6 py-3 bg-white text-rose-700 font-extrabold rounded-2xl shadow-md">
+                        <i class="fa-solid fa-phone mr-2 animate-bounce"></i> Líneas Gratuitas de Salud Mental en tu Región
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PÁGINA 5: REDES SOCIALES ================= -->
+        <div id="redes" class="tab-content animate-fade-in py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="navigateTo('inicio')" class="text-sm font-semibold text-mental-600 hover:text-mental-800 flex items-center space-x-1.5 mb-6">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al menú principal</span>
+                </button>
+
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">5. Las Redes Sociales y la Salud Mental</h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    Las redes sociales nos permiten conectar globalmente en tiempo real, pero su diseño basado en la economía de la atención y la búsqueda de micro-dosis de dopamina genera un impacto psicológico sin precedentes.
+                </p>
+
+                <!-- El Mecanismo Psicológico de Impacto -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white p-6 border border-slate-200 rounded-3xl">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-compress"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-2">Trampa de la Comparación</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed">Comparamos constantemente nuestra rutina diaria "detrás de cámaras" con los momentos estéticos y perfectamente editados del muro de los demás.</p>
+                    </div>
+
+                    <div class="bg-white p-6 border border-slate-200 rounded-3xl">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-2">Bucle de Dopamina</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed">Cada "like" actúa como una recompensa intermitente que estimula vías neuronales similares al juego o las adicciones químicas tradicionales.</p>
+                    </div>
+
+                    <div class="bg-white p-6 border border-slate-200 rounded-3xl">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-ghost"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-2">Fenómeno FOMO</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed"><em>Fear Of Missing Out</em> (miedo a perderse algo). Ansiedad generalizada de no estar al tanto de las tendencias y actualizaciones en línea en tiempo real.</p>
+                    </div>
+                </div>
+
+                <!-- Lista de Recomendaciones Higiene Digital -->
+                <div class="bg-slate-900 text-white p-8 rounded-3xl mb-10">
+                    <h3 class="text-xl font-bold mb-6 flex items-center space-x-2">
+                        <i class="fa-solid fa-shield-halved text-blue-400"></i>
+                        <span>Manual de Higiene Digital Práctica</span>
+                    </h3>
+                    
+                    <div class="space-y-4 text-sm text-slate-300">
+                        <div class="flex items-start">
+                            <i class="fa-regular fa-circle-check text-blue-400 mr-3 mt-1"></i>
+                            <p><strong>Configura temporizadores:</strong> Limita el uso de apps recreativas a un máximo de 45 minutos al día en los ajustes de tu smartphone.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa-regular fa-circle-check text-blue-400 mr-3 mt-1"></i>
+                            <p><strong>Desactiva notificaciones push:</strong> Conserva las alertas únicamente para mensajería personal relevante, silenciando feeds de recomendaciones.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa-regular fa-circle-check text-blue-400 mr-3 mt-1"></i>
+                            <p><strong>Zonas libres de pantallas:</strong> Evita introducir el teléfono celular al dormitorio al menos 1 hora antes de dormir para permitir la correcta liberación de melatonina.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa-regular fa-circle-check text-blue-400 mr-3 mt-1"></i>
+                            <p><strong>Curaduría consciente:</strong> Deja de seguir cuentas de manera periódica si te generan sentimientos de inferioridad, inseguridad física o ansiedad financiera.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PÁGINA 6: SALUD EMOCIONAL ================= -->
+        <div id="salud-emocional" class="tab-content animate-fade-in py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="navigateTo('inicio')" class="text-sm font-semibold text-mental-600 hover:text-mental-800 flex items-center space-x-1.5 mb-6">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al menú principal</span>
+                </button>
+
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">6. Salud Emocional</h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    A menudo se confunden los términos, pero la <strong>salud emocional</strong> es un componente específico de la salud mental. Se enfoca de lleno en la capacidad de conectarnos, expresar empatía por otros, superar transiciones dolorosas y asimilar las complejidades sentimentales de la vida cotidiana.
+                </p>
+
+                <!-- Características de un individuo emocionalmente sano -->
+                <h3 class="text-2xl font-bold text-slate-900 mb-6">Pilares de una Salud Emocional Sólida</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+                        <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-arrows-spin text-teal-600"></i>
+                            <span>Resiliencia Dinámica</span>
+                        </h4>
+                        <p class="text-slate-500 text-sm">Capacidad de doblarse pero no quebrarse ante las tragedias. Consiste en aprender de los errores y reconstruirse con mayor madurez emocional.</p>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+                        <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-user-check text-teal-600"></i>
+                            <span>Locus de Control Interno</span>
+                        </h4>
+                        <p class="text-slate-500 text-sm">Comprender que aunque no puedes controlar los acontecimientos del exterior, tienes control absoluto sobre tu actitud y reacciones internas.</p>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+                        <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-seedling text-teal-600"></i>
+                            <span>Límites Saludables</span>
+                        </h4>
+                        <p class="text-slate-500 text-sm">Establecer fronteras claras respecto a lo que estás dispuesto a tolerar o procesar en tus relaciones, sin caer en el rol de complacer de manera patológica.</p>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+                        <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-comments text-teal-600"></i>
+                            <span>Asertividad en la Comunicación</span>
+                        </h4>
+                        <p class="text-slate-500 text-sm">Capacidad para externar tus ideas, necesidades o desacuerdos de forma respetuosa pero firme, sin agredir ni someterte pasivamente.</p>
+                    </div>
+                </div>
+
+                <!-- Consejos para nutrirla diariamente -->
+                <div class="bg-teal-50 border border-teal-100 p-8 rounded-3xl">
+                    <h4 class="text-lg font-bold text-teal-900 mb-4">Ejercicios Diarios de Conexión Emocional</h4>
+                    <p class="text-teal-950 text-sm leading-relaxed mb-4">
+                        Tómate 5 minutos diarios al final del día para la introspección. Pregúntate en voz alta: "¿Qué emoción predominó hoy en mi cuerpo?" y "¿Cómo afectaron mis pensamientos a mi estado físico?". Al externalizar este diálogo, desarrollas auto-empatía clínica progresivamente.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PÁGINA 7: ESTRÉS ================= -->
+        <div id="estres" class="tab-content animate-fade-in py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="navigateTo('inicio')" class="text-sm font-semibold text-mental-600 hover:text-mental-800 flex items-center space-x-1.5 mb-6">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al menú principal</span>
+                </button>
+
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">7. El Estrés y la Regulación del Sistema Nervioso</h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    El estrés es una respuesta adaptativa biológica que prepara a nuestro cuerpo para pelear o huir ante una amenaza. Sin embargo, cuando el estrés se vuelve **crónico** debido a las exigencias modernas, provoca un flujo constante de cortisol que debilita el sistema inmunológico y daña el cerebro.
+                </p>
+
+                <!-- Eustrés vs Distrés -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-emerald-50 border border-emerald-100 rounded-3xl p-6">
+                        <h3 class="font-bold text-emerald-900 text-lg mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            <span>Eustrés (Estrés Positivo)</span>
+                        </h3>
+                        <p class="text-emerald-950 text-xs leading-relaxed">Funciona como un motor motivador que ayuda a mantenerte enfocado, creativo e impulsado para resolver un reto inminente (ej. un examen o una meta laboral).</p>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-100 rounded-3xl p-6">
+                        <h3 class="font-bold text-red-900 text-lg mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>Distrés (Estrés Negativo)</span>
+                        </h3>
+                        <p class="text-red-950 text-xs leading-relaxed">Ocurre cuando las demandas externas superan tus capacidades de afrontamiento reales. Genera agotamiento, frustración y deterioro clínico.</p>
+                    </div>
+                </div>
+
+                <!-- Síntomas Fisiológicos del Estrés Crónico -->
+                <h3 class="text-2xl font-bold text-slate-900 mb-6">El Impacto Físico del Estrés en el Cuerpo</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-red-600 mx-auto mb-3">
+                            <i class="fa-solid fa-head-side-virus"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm mb-1">Cefaleas tensionales</h4>
+                        <p class="text-slate-500 text-xs">Dolor persistente de cabeza, mandíbula rígida o bruxismo nocturno.</p>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-red-600 mx-auto mb-3">
+                            <i class="fa-solid fa-weight-scale"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm mb-1">Inflamación</h4>
+                        <p class="text-slate-500 text-xs">Dolores estomacales crónicos, colon irritable e inmunidad deprimida.</p>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-red-600 mx-auto mb-3">
+                            <i class="fa-solid fa-battery-empty"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm mb-1">Insomnio de conciliación</h4>
+                        <p class="text-slate-500 text-xs">Dificultad prolongada para conciliar el sueño por rumiaciones.</p>
+                    </div>
+                </div>
+
+                <!-- Técnicas Clínicas de Alivio del Estrés -->
+                <div class="bg-slate-900 text-white rounded-3xl p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4">La técnica del Suspiro Fisiológico</h3>
+                    <p class="text-slate-300 text-sm mb-6">Validada por neurobiólogos de Stanford, esta respiración calma el ritmo cardíaco en segundos: inhala profundamente por la nariz, realiza un segundo sorbo corto de aire para expandir los alvéolos pulmonares y exhala lentamente con la boca completamente abierta.</p>
+                    <button onclick="navigateTo('herramientas')" class="px-5 py-3 bg-white text-slate-900 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-all flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-circle-play text-mental-600"></i>
+                        <span>Entrenar técnicas respiratorias</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PÁGINA 8: HERRAMIENTAS INTERACTIVAS ================= -->
+        <div id="herramientas" class="tab-content animate-fade-in py-12">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">Gimnasio de Bienestar Interactivo</h1>
+                    <p class="text-slate-600 mt-2 text-sm">Entrena tu cerebro, rastrea tu estado emocional y calma tu mente en tiempo real a través de aplicaciones interactivas personalizadas.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    
+                    <!-- 1. RESPIRADOR GUIADO BOX BREATHING -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex flex-col items-center">
+                        <span class="text-xs font-bold text-mental-600 bg-mental-50 px-3 py-1 rounded-full mb-4">Ejercitador de Ansiedad</span>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Respiración Guiada</h3>
+                        <p class="text-slate-500 text-xs text-center mb-6">Inhala en 4s, mantén 4s, exhala en 4s, mantén vacío 4s. Ayuda a frenar las crisis de ansiedad de inmediato.</p>
+
+                        <!-- Animación del respirador -->
+                        <div class="w-48 h-48 rounded-full border border-slate-100 flex items-center justify-center mb-6 relative bg-slate-50" id="breathe-container">
+                            <div class="breathe-circle w-32 h-32 rounded-full flex items-center justify-center transition-all duration-300">
+                                <span class="text-sm font-bold text-mental-800" id="breathe-text">Detenido</span>
+                            </div>
+                        </div>
+
+                        <!-- Botones Control -->
+                        <button id="breathe-toggle-btn" onclick="toggleBreathing()" class="w-full py-3 bg-mental-600 hover:bg-mental-700 text-white font-semibold rounded-xl text-sm transition-all shadow-md shadow-mental-600/15 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-play" id="breathe-btn-icon"></i>
+                            <span id="breathe-btn-text">Iniciar respiración</span>
+                        </button>
+                    </div>
+
+                    <!-- 2. AUTOEVALUACIÓN DE ESTADO DE ÁNIMO -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm">
+                        <span class="text-xs font-bold text-calm-600 bg-calm-50 px-3 py-1 rounded-full mb-4 inline-block">Monitoreo Diario</span>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Termómetro de Ánimo</h3>
+                        <p class="text-slate-500 text-xs mb-6">¿Cómo te sientes en este preciso instante? Selecciona una opción para recibir un consejo de autorregulación clínica adaptado.</p>
+
+                        <div class="grid grid-cols-5 gap-3 mb-6">
+                            <button onclick="checkMood('calm', '¡Excelente! Aprovecha este estado de equilibrio para estructurar planes futuros o realizar tareas que requieran lucidez mental.')" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-2xl flex flex-col items-center border border-slate-100 hover:border-emerald-200 transition-all">
+                                <span class="text-2xl">😊</span>
+                                <span class="text-[10px] text-slate-500 mt-1 font-medium">Feliz</span>
+                            </button>
+                            <button onclick="checkMood('anxious', 'Sientes agitación. Realiza el respirador guiado a tu izquierda por 2 minutos o da una caminata breve sin pantallas.')" class="p-3 bg-slate-50 hover:bg-amber-50 rounded-2xl flex flex-col items-center border border-slate-100 hover:border-amber-200 transition-all">
+                                <span class="text-2xl">😰</span>
+                                <span class="text-[10px] text-slate-500 mt-1 font-medium">Ansioso</span>
+                            </button>
+                            <button onclick="checkMood('sad', 'Valida tu tristeza. Está bien llorar si lo necesitas. Escribe lo que sientes en tu diario de gratitud para canalizar.')" class="p-3 bg-slate-50 hover:bg-blue-50 rounded-2xl flex flex-col items-center border border-slate-100 hover:border-blue-200 transition-all">
+                                <span class="text-2xl">😢</span>
+                                <span class="text-[10px] text-slate-500 mt-1 font-medium">Triste</span>
+                            </button>
+                            <button onclick="checkMood('angry', 'La ira es energía. Canalízala con respiraciones profundas o haz flexiones de pecho para quemar cortisol acumulado.')" class="p-3 bg-slate-50 hover:bg-red-50 rounded-2xl flex flex-col items-center border border-slate-100 hover:border-red-200 transition-all">
+                                <span class="text-2xl">😡</span>
+                                <span class="text-[10px] text-slate-500 mt-1 font-medium">Enojado</span>
+                            </button>
+                            <button onclick="checkMood('tired', 'Tu cuerpo pide descanso. Duerme una siesta corta de 20 minutos o desconéctate totalmente del teléfono hoy.')" class="p-3 bg-slate-50 hover:bg-indigo-50 rounded-2xl flex flex-col items-center border border-slate-100 hover:border-indigo-200 transition-all">
+                                <span class="text-2xl">😴</span>
+                                <span class="text-[10px] text-slate-500 mt-1 font-medium">Cansado</span>
+                            </button>
+                        </div>
+
+                        <!-- Recomendación Dinámica -->
+                        <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 min-h-[100px] flex items-center justify-center text-center transition-all" id="mood-advice-container">
+                            <p class="text-slate-500 text-xs italic" id="mood-advice-text">Haz clic en un emoji para desplegar orientación clínica personalizada.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. DIARIO DE GRATITUD DIGITAL -->
+                    <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full mb-4 inline-block">Entrenamiento Mental</span>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Diario de Gratitud</h3>
+                        <p class="text-slate-500 text-xs mb-4">Registra tres cosas por las que sientas gratitud en el día de hoy para reentrenar tu atención hacia las experiencias positivas.</p>
+
+                        <div class="space-y-3 mb-4">
+                            <input type="text" id="gratitude-1" placeholder="1. Ej. Un café delicioso por la mañana" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-mental-500 focus:outline-none transition-all">
+                            <input type="text" id="gratitude-2" placeholder="2. Ej. Recibir una llamada de un buen amigo" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-mental-500 focus:outline-none transition-all">
+                            <input type="text" id="gratitude-3" placeholder="3. Ej. Tener un espacio tranquilo para leer" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-mental-500 focus:outline-none transition-all">
+                        </div>
+
+                        <button onclick="saveGratitude()" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-sm transition-all shadow-md shadow-slate-900/10 mb-4">
+                            Guardar Agradecimiento
+                        </button>
+
+                        <!-- Historial de Gratitud Guardado -->
+                        <div class="border-t border-slate-100 pt-4">
+                            <h4 class="text-slate-700 font-bold text-xs mb-3">Tus Registros Anteriores:</h4>
+                            <div class="space-y-2 max-h-32 overflow-y-auto" id="gratitude-history">
+                                <p class="text-slate-400 text-[11px] italic text-center py-2" id="empty-gratitude-text">Aún no has guardado registros en esta sesión.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER / PIE DE PÁGINA -->
+    <footer class="bg-white border-t border-slate-100 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center border-b border-slate-100 pb-8 mb-8">
+                <!-- Branding -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-mental-500 to-calm-500 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-brain text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-mental-600 to-calm-600 bg-clip-text text-transparent">MenteSana</span>
+                </div>
+                <!-- Frase -->
+                <p class="text-slate-400 text-xs text-center md:text-left leading-relaxed">
+                    Este sitio web es de carácter estrictamente informativo y no sustituye de ninguna forma el diagnóstico ni tratamiento de un profesional de la salud mental licenciado.
+                </p>
+                <!-- Redes sociales simuladas / links -->
+                <div class="flex justify-center md:justify-end space-x-4">
+                    <a href="https://www.who.int/es/news-room/fact-sheets/detail/mental-health-strengthening-our-response" target="_blank" class="w-9 h-9 rounded-full bg-slate-50 hover:bg-mental-50 text-slate-500 hover:text-mental-600 flex items-center justify-center transition-all" title="Ver información de la OMS">
+                        <i class="fa-solid fa-globe text-sm"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center text-slate-400 text-xs">
+                &copy; 2026 MenteSana Portal. Diseñado con compromiso ético y rigor psicológico para el autocuidado de todos.
+            </div>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE PROGRAMACIÓN INTERACTIVA -->
+    <script>
+        // --- 1. ROUTER INTERNO (Navegación Dinámica) ---
+        function navigateTo(tabId) {
+            // Desactivar todos los contenidos de pestaña
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Activar la seleccionada
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            // Actualizar estilo en menús de navegación de escritorio
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                if (btn.getAttribute('data-target') === tabId) {
+                    btn.classList.add('text-mental-600', 'bg-mental-50');
+                    btn.classList.remove('text-slate-600', 'hover:bg-slate-50');
+                } else {
+                    btn.classList.remove('text-mental-600', 'bg-mental-50');
+                    btn.classList.add('text-slate-600', 'hover:bg-slate-50');
+                }
+            });
+
+            // Actualizar estilo en menús móviles
+            const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
+            mobileNavButtons.forEach(btn => {
+                if (btn.getAttribute('data-target') === tabId) {
+                    btn.classList.add('text-mental-600', 'bg-mental-50');
+                    btn.classList.remove('text-slate-600', 'hover:bg-slate-50');
+                } else {
+                    btn.classList.remove('text-mental-600', 'bg-mental-50');
+                    btn.classList.add('text-slate-600', 'hover:bg-slate-50');
+                }
+            });
+
+            // Cerrar menú móvil si estuviera abierto
+            document.getElementById('mobile-menu').classList.add('hidden');
+            document.getElementById('menu-icon').className = "fa-solid fa-bars text-2xl";
+
+            // Desplazar automáticamente al tope superior de la página
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- 2. CONTROL DEL MENÚ MÓVIL ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = "fa-solid fa-xmark text-2xl";
+            } else {
+                menu.classList.add('hidden');
+                icon.className = "fa-solid fa-bars text-2xl";
+            }
+        }
+
+        // --- 3. TOAST NOTIFICATION ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        // --- 4. RESPIRADOR GUIADO BOX BREATHING ---
+        let breathingInterval = null;
+        let breathState = 0; // 0: Inhala, 1: Retén, 2: Exhala, 3: Retén vacío
+        let breathTimer = 4;
+
+        function toggleBreathing() {
+            const container = document.getElementById('breathe-container');
+            const btnIcon = document.getElementById('breathe-btn-icon');
+            const btnText = document.getElementById('breathe-btn-text');
+            const toggleBtn = document.getElementById('breathe-toggle-btn');
+            
+            if (breathingInterval) {
+                // Detener ejercicio
+                clearInterval(breathingInterval);
+                breathingInterval = null;
+                container.classList.remove('breathe-active');
+                document.getElementById('breathe-text').innerText = "Detenido";
+                document.getElementById('breathe-text').className = "text-sm font-bold text-slate-500";
+                
+                btnIcon.className = "fa-solid fa-play";
+                btnText.innerText = "Iniciar respiración";
+                toggleBtn.className = "w-full py-3 bg-mental-600 hover:bg-mental-700 text-white font-semibold rounded-xl text-sm transition-all shadow-md shadow-mental-600/15 flex items-center justify-center space-x-2";
+                
+                breathState = 0;
+                breathTimer = 4;
+                showToast("Ejercicio de respiración finalizado.");
+            } else {
+                // Iniciar ejercicio
+                container.classList.add('breathe-active');
+                btnIcon.className = "fa-solid fa-square-stop";
+                btnText.innerText = "Detener ejercicio";
+                toggleBtn.className = "w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl text-sm transition-all shadow-md shadow-red-600/15 flex items-center justify-center space-x-2";
+                
+                runBreathingCycle();
+                breathingInterval = setInterval(runBreathingCycle, 1000);
+                showToast("Inicia tu respiración de caja (4-4-4-4).");
+            }
+        }
+
+        function runBreathingCycle() {
+            const textElement = document.getElementById('breathe-text');
+            
+            if (breathTimer === 0) {
+                breathState = (breathState + 1) % 4;
+                breathTimer = 4;
+            }
+
+            if (breathState === 0) {
+                textElement.innerText = `Inhala (${breathTimer})`;
+                textElement.className = "text-base font-extrabold text-mental-700 animate-pulse";
+            } else if (breathState === 1) {
+                textElement.innerText = `Retén (${breathTimer})`;
+                textElement.className = "text-base font-extrabold text-calm-700 animate-pulse";
+            } else if (breathState === 2) {
+                textElement.innerText = `Exhala (${breathTimer})`;
+                textElement.className = "text-base font-extrabold text-mental-600 animate-pulse";
+            } else {
+                textElement.innerText = `Vacío (${breathTimer})`;
+                textElement.className = "text-base font-extrabold text-slate-700 animate-pulse";
+            }
+
+            breathTimer--;
+        }
+
+        // --- 5. TERMÓMETRO DE ESTADO DE ÁNIMO ---
+        function checkMood(moodType, adviceText) {
+            const textContainer = document.getElementById('mood-advice-text');
+            const container = document.getElementById('mood-advice-container');
+            
+            textContainer.innerText = adviceText;
+            textContainer.className = "text-slate-800 text-xs font-semibold leading-relaxed";
+            
+            // Añadir efectos visuales según el estado de ánimo seleccionado
+            if (moodType === 'calm') {
+                container.className = "bg-emerald-50 border border-emerald-100 rounded-2xl p-4 min-h-[100px] flex items-center justify-center text-center transition-all duration-300";
+            } else if (moodType === 'anxious') {
+                container.className = "bg-amber-50 border border-amber-100 rounded-2xl p-4 min-h-[100px] flex items-center justify-center text-center transition-all duration-300";
+            } else if (moodType === 'sad') {
+                container.className = "bg-blue-50 border border-blue-100 rounded-2xl p-4 min-h-[100px] flex items-center justify-center text-center transition-all duration-300";
+            } else if (moodType === 'angry') {
+                container.className = "bg-red-50 border border-red-100 rounded-2xl p-4 min-h-[100px] flex items-center justify-center text-center transition-all duration-300";
+            } else {
+                container.className = "bg-indigo-50 border border-indigo-100 rounded-2xl p-4 min-h-[100px] flex items-center justify-center text-center transition-all duration-300";
+            }
+            
+            showToast("Orientación diaria cargada con éxito.");
+        }
+
+        // --- 6. DIARIO DE GRATITUD DIGITAL ---
+        function saveGratitude() {
+            const input1 = document.getElementById('gratitude-1');
+            const input2 = document.getElementById('gratitude-2');
+            const input3 = document.getElementById('gratitude-3');
+            const historyContainer = document.getElementById('gratitude-history');
+            const emptyText = document.getElementById('empty-gratitude-text');
+
+            if (!input1.value.trim() && !input2.value.trim() && !input3.value.trim()) {
+                showToast("Por favor, escribe al menos una cosa por la cual agradecer hoy.");
+                return;
+            }
+
+            // Ocultar texto vacío
+            if (emptyText) {
+                emptyText.style.display = 'none';
+            }
+
+            // Crear bloque de registro
+            const date = new Date();
+            const dateString = `${date.getDate()}/${date.getMonth() + 1} - ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+            
+            const recordDiv = document.createElement('div');
+            recordDiv.className = "bg-slate-50 border border-slate-100 p-3 rounded-xl transition-all hover:bg-slate-100";
+            
+            let recordContent = `<span class="text-[9px] font-bold text-slate-400 block mb-1">${dateString}</span>`;
+            recordContent += `<ul class="space-y-1 text-slate-700 text-[11px] list-disc pl-3">`;
+            if (input1.value.trim()) recordContent += `<li>${input1.value.trim()}</li>`;
+            if (input2.value.trim()) recordContent += `<li>${input2.value.trim()}</li>`;
+            if (input3.value.trim()) recordContent += `<li>${input3.value.trim()}</li>`;
+            recordContent += `</ul>`;
+            
+            recordDiv.innerHTML = recordContent;
+            
+            // Insertar al inicio de la lista
+            historyContainer.insertBefore(recordDiv, historyContainer.firstChild);
+
+            // Limpiar inputs
+            input1.value = '';
+            input2.value = '';
+            input3.value = '';
+
+            showToast("Agradecimiento guardado exitosamente.");
+        }
+    </script>
+</body>
+</html>
